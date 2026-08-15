@@ -1,0 +1,16 @@
+{
+  "eventName": "Romeo Santos - Fan Action",
+  "directorPin": "3535",
+  "welcomeTitle": "¡Prepara tu flash!",
+  "welcomeMessage": "App gratuita hecha por fans, para fans: elige tu sector y cuando llegue el momento, tu pantalla se va a encender junto con la de todo tu sector. También puedes apretar el botón cuando quieras para prender tu flash por tu cuenta. ¡Que se encienda el estadio entero!",
+  "credit": "Hecho con 💛 por fans de Romeo Santos",
+  "sectors": [
+    { "id": "platea-a", "name": "Platea Baja A", "color": "#FFD700" },
+    { "id": "platea-b", "name": "Platea Baja B", "color": "#FF3B30" },
+    { "id": "platea-alta", "name": "Platea Alta", "color": "#1E90FF" },
+    { "id": "cancha", "name": "Cancha General", "color": "#FFFFFF" },
+    { "id": "palcos", "name": "Palcos VIP", "color": "#B300FF" },
+    { "id": "tribuna-norte", "name": "Tribuna Norte", "color": "#00E676" },
+    { "id": "tribuna-sur", "name": "Tribuna Sur", "color": "#FF8C00" }
+  ]
+}
