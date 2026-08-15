@@ -232,10 +232,8 @@
   });
 
   // ---------- Modal de bienvenida ----------
-  const WELCOME_SEEN_KEY = 'fanaction_welcome_seen';
-
+  // Aparece cada vez que se abre el link o la app (no solo la primera vez).
   function showWelcomeModal(title, message) {
-    if (localStorage.getItem(WELCOME_SEEN_KEY)) return;
     if (title) welcomeTitleEl.textContent = title;
     if (message) welcomeMessageEl.textContent = message;
     welcomeModal.classList.remove('hidden');
@@ -243,7 +241,6 @@
 
   welcomeOkBtn.addEventListener('click', () => {
     welcomeModal.classList.add('hidden');
-    localStorage.setItem(WELCOME_SEEN_KEY, '1');
   });
 
   // ---------- Boton grande de flash manual ----------
