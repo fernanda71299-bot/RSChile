@@ -338,6 +338,24 @@ h1 {
   }
 }
 
+/* Estado "prendido": anillo dorado fijo y mas brillo, sin el pulso */
+.big-flash-btn.active .big-flash-inner {
+  animation: flash-on-glow 1.2s ease-in-out infinite;
+  box-shadow:
+    0 0 0 8px rgba(255, 215, 0, 0.35),
+    0 0 50px 16px rgba(255, 215, 0, 0.7),
+    inset 0 0 20px rgba(0,0,0,0.25);
+}
+
+@keyframes flash-on-glow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.15); }
+}
+
+.manual-cta.active-label {
+  color: #2ecc71;
+}
+
 .manual-hint {
   color: #a89c8c;
   font-size: 12px;

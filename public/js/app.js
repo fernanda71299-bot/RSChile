@@ -23,6 +23,7 @@
   const welcomeOkBtn = document.getElementById('welcome-ok');
   const creditTextEl = document.getElementById('credit-text');
   const manualFlashBtn = document.getElementById('manual-flash-btn');
+  const manualFlashLabel = document.getElementById('manual-flash-label');
 
   let sectors = [];
   let mySector = null; // {id, name, color}
@@ -68,6 +69,7 @@
     mySector = s;
     localStorage.setItem(STORAGE_KEY, id);
     showReadyScreen();
+    resetManualFlash();
     joinSector(id);
   }
 
@@ -83,8 +85,19 @@
 
   changeSectorBtn.addEventListener('click', () => {
     localStorage.removeItem(STORAGE_KEY);
+    resetManualFlash();
     showSelectScreen();
   });
+
+  function resetManualFlash() {
+    manualOn = false;
+    clearInterval(blinkTimer);
+    flashOverlay.style.backgroundColor = 'transparent';
+    setTorch(false);
+    manualFlashBtn.classList.remove('active');
+    manualFlashLabel.classList.remove('active-label');
+    manualFlashLabel.textContent = '¡APRIETA EL BOTÓN!';
+  }
 
   // ---------- Torch (linterna) ----------
   async function requestTorch() {
@@ -139,6 +152,21 @@
   }
 
   // ---------- Flash rendering ----------
+  // manualOn: si el fan dejó su flash prendido "a mano" (botón grande), esta
+  // es la pantalla/linterna a la que se vuelve una vez que termina cualquier
+  // efecto temporizado que venga del director.
+  let manualOn = false;
+
+  function applyBaseState() {
+    if (manualOn && mySector) {
+      flashOverlay.style.backgroundColor = mySector.color;
+      setTorch(true);
+    } else {
+      flashOverlay.style.backgroundColor = 'transparent';
+      setTorch(false);
+    }
+  }
+
   function doFlash(payload) {
     const { color, pattern, duration } = payload;
     clearInterval(blinkTimer);
@@ -157,15 +185,13 @@
       }, interval);
       setTimeout(() => {
         clearInterval(blinkTimer);
-        flashOverlay.style.backgroundColor = 'transparent';
-        setTorch(false);
+        applyBaseState();
       }, duration);
     } else {
       flashOverlay.style.backgroundColor = color;
       setTorch(true);
       setTimeout(() => {
-        flashOverlay.style.backgroundColor = 'transparent';
-        setTorch(false);
+        applyBaseState();
       }, duration);
     }
   }
@@ -203,12 +229,19 @@
   });
 
   // ---------- Boton grande de flash manual ----------
-  // Enciende el flash del propio celular al instante, sin depender del
-  // servidor ni de señal: sirve tanto como gesto espontáneo del fan como
-  // respaldo si la red del recinto está saturada.
+  // Funciona como interruptor: un toque lo prende y se queda prendido hasta
+  // que se vuelva a tocar. No depende del servidor ni de señal, así que
+  // sirve tanto como gesto espontáneo del fan como respaldo si la red del
+  // recinto está saturada.
   manualFlashBtn.addEventListener('click', () => {
     if (!mySector) return;
-    doFlash({ color: mySector.color, pattern: 'blink', duration: 1400 });
+    manualOn = !manualOn;
+    manualFlashBtn.classList.toggle('active', manualOn);
+    manualFlashLabel.classList.toggle('active-label', manualOn);
+    manualFlashLabel.textContent = manualOn ? '¡PRENDIDO! TOCA PARA APAGAR' : '¡APRIETA EL BOTÓN!';
+    if (navigator.vibrate) navigator.vibrate(manualOn ? 150 : 60);
+    clearInterval(blinkTimer);
+    applyBaseState();
   });
 
   // ---------- Instalar como app (PWA) ----------
