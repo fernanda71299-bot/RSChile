@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0a0a0a" />
+<title>Panel de Control - Fan Action</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/director.css" />
+<link rel="icon" href="/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+</head>
+<body class="director-body">
+
+  <!-- LOGIN -->
+  <section id="login-screen" class="dscreen">
+    <div class="login-card">
+      <h1>Panel del Director</h1>
+      <p class="hint">Ingresa el PIN para controlar el fan action en vivo.</p>
+      <input id="pin-input" type="password" inputmode="numeric" placeholder="PIN" maxlength="8" />
+      <button id="login-btn" class="primary-btn">Entrar</button>
+      <p id="login-error" class="error-text"></p>
+    </div>
+  </section>
+
+  <!-- PANEL -->
+  <section id="panel-screen" class="dscreen hidden">
+    <header class="dtopbar">
+      <div>
+        <span class="brand-title" id="d-event-name">Fan Action</span>
+        <span class="conn-dot online" id="d-conn-dot"></span>
+      </div>
+      <div class="totals" id="totals">0 fans conectados</div>
+    </header>
+
+    <div class="controls-bar">
+      <label>Color
+        <input type="color" id="global-color" value="#FFD700" />
+      </label>
+      <label>Patrón
+        <select id="global-pattern">
+          <option value="solid">Sólido</option>
+          <option value="blink">Parpadeo</option>
+        </select>
+      </label>
+      <label>Duración (s)
+        <input type="range" id="global-duration" min="0.5" max="15" step="0.5" value="3" />
+        <span id="duration-label">3s</span>
+      </label>
+      <label class="chk">
+        <input type="checkbox" id="global-torch" checked />
+        Incluir flash físico
+      </label>
+    </div>
+
+    <button id="flash-all-btn" class="flash-all-btn">⚡ FLASH A TODOS (color elegido)</button>
+
+    <h2 class="section-title">Sectores</h2>
+    <div id="sector-grid" class="sector-grid"></div>
+
+    <h2 class="section-title">Historial</h2>
+    <div id="log-list" class="log-list"></div>
+  </section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/director.js"></script>
+</body>
+</html>

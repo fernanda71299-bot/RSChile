@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0a0a" />
+<title>Fan Action</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+<link rel="icon" href="/icons/icon-192.png" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Fan Action" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="flash-overlay"></div>
+
+  <!-- MODAL DE BIENVENIDA -->
+  <div id="welcome-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <h2 id="welcome-title" class="headline">¡Prepara tu flash!</h2>
+      <p id="welcome-message">Cargando...</p>
+      <button id="welcome-ok" class="primary-btn">¡Listo!</button>
+    </div>
+  </div>
+
+  <main id="app">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-title" id="event-name">Fan Action</span>
+        <span class="conn-dot" id="conn-dot" title="Desconectado"></span>
+      </div>
+    </header>
+
+    <!-- PANTALLA 1: elegir sector -->
+    <section id="screen-select" class="screen">
+      <h1 class="headline">Elige tu sector</h1>
+      <p class="hint">Selecciona d&oacute;nde est&aacute;s ubicado para sincronizar tu color con el resto del sector.</p>
+      <div id="sector-list" class="sector-list">
+        <p class="loading">Cargando sectores...</p>
+      </div>
+    </section>
+
+    <!-- PANTALLA 2: listo, esperando la se&ntilde;al -->
+    <section id="screen-ready" class="screen hidden">
+      <div class="ready-card">
+        <div class="swatch" id="my-swatch"></div>
+        <h2 id="my-sector-name">-</h2>
+        <p class="status-text" id="status-text">Conectado. Esperando la se&ntilde;al del animador...</p>
+      </div>
+
+      <h3 class="headline manual-cta">¡APRIETA EL BOTÓN!</h3>
+      <button id="manual-flash-btn" class="big-flash-btn" aria-label="Prender flash manualmente">
+        <span class="big-flash-inner"></span>
+      </button>
+      <p class="manual-hint">Tócalo cuando quieras para prender tu flash por tu cuenta, sin esperar la se&ntilde;al</p>
+
+      <div class="tips">
+        <p>📱 Sube el brillo de tu pantalla al m&aacute;ximo</p>
+        <p>🔋 Ideal con bater&iacute;a suficiente</p>
+      </div>
+
+      <div class="torch-box">
+        <label class="switch-row">
+          <span>Usar tambi&eacute;n el flash de la c&aacute;mara</span>
+          <input type="checkbox" id="torch-toggle" />
+        </label>
+        <p class="torch-note" id="torch-note"></p>
+      </div>
+
+      <button id="change-sector-btn" class="link-btn">Cambiar de sector</button>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <span id="credit-text"></span>
+  </footer>
+
+  <div id="install-banner" class="install-banner hidden">
+    <span id="install-text">📲 Instala esta app en tu pantalla de inicio para acceder más rápido</span>
+    <button id="install-btn" class="install-btn hidden">Instalar</button>
+    <button id="install-dismiss" class="install-dismiss">✕</button>
+  </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
