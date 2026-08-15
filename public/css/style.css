@@ -292,6 +292,32 @@ h1 {
   margin: 26px 0 16px;
 }
 
+.mode-switch {
+  display: flex;
+  gap: 6px;
+  background: #150f0a;
+  border: 1px solid #2e2620;
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 22px;
+}
+
+.mode-btn {
+  border: none;
+  background: none;
+  color: #a89c8c;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.mode-btn.active {
+  background: linear-gradient(90deg, #FFD700, #FF8C00);
+  color: #1a1408;
+}
+
 .big-flash-btn {
   width: 140px;
   height: 140px;

@@ -24,6 +24,8 @@
   const creditTextEl = document.getElementById('credit-text');
   const manualFlashBtn = document.getElementById('manual-flash-btn');
   const manualFlashLabel = document.getElementById('manual-flash-label');
+  const modeSolidBtn = document.getElementById('mode-solid-btn');
+  const modeBlinkBtn = document.getElementById('mode-blink-btn');
 
   let sectors = [];
   let mySector = null; // {id, name, color}
@@ -92,6 +94,7 @@
   function resetManualFlash() {
     manualOn = false;
     clearInterval(blinkTimer);
+    clearInterval(manualBlinkTimer);
     flashOverlay.style.backgroundColor = 'transparent';
     setTorch(false);
     manualFlashBtn.classList.remove('active');
@@ -154,22 +157,37 @@
   // ---------- Flash rendering ----------
   // manualOn: si el fan dejó su flash prendido "a mano" (botón grande), esta
   // es la pantalla/linterna a la que se vuelve una vez que termina cualquier
-  // efecto temporizado que venga del director.
+  // efecto temporizado que venga del director. manualPattern define si ese
+  // estado "de base" es luz fija o parpadeo continuo.
   let manualOn = false;
+  let manualPattern = 'solid'; // 'solid' | 'blink'
+  let manualBlinkTimer = null;
 
   function applyBaseState() {
-    if (manualOn && mySector) {
-      flashOverlay.style.backgroundColor = mySector.color;
-      setTorch(true);
-    } else {
+    clearInterval(manualBlinkTimer);
+    if (!manualOn || !mySector) {
       flashOverlay.style.backgroundColor = 'transparent';
       setTorch(false);
+      return;
+    }
+    const color = mySector.color;
+    if (manualPattern === 'blink') {
+      let on = false;
+      manualBlinkTimer = setInterval(() => {
+        on = !on;
+        flashOverlay.style.backgroundColor = on ? color : 'transparent';
+        setTorch(on);
+      }, 220);
+    } else {
+      flashOverlay.style.backgroundColor = color;
+      setTorch(true);
     }
   }
 
   function doFlash(payload) {
     const { color, pattern, duration } = payload;
     clearInterval(blinkTimer);
+    clearInterval(manualBlinkTimer);
 
     if (navigator.vibrate) {
       navigator.vibrate(pattern === 'blink' ? [80, 60, 80, 60, 80] : 120);
@@ -243,6 +261,18 @@
     clearInterval(blinkTimer);
     applyBaseState();
   });
+
+  // Selector de modo: fijo o parpadeo. El fan elige antes o mientras está
+  // prendido; si cambia de modo con la luz encendida, se aplica al instante.
+  function setManualPattern(pattern) {
+    manualPattern = pattern;
+    modeSolidBtn.classList.toggle('active', pattern === 'solid');
+    modeBlinkBtn.classList.toggle('active', pattern === 'blink');
+    if (manualOn) applyBaseState();
+  }
+
+  modeSolidBtn.addEventListener('click', () => setManualPattern('solid'));
+  modeBlinkBtn.addEventListener('click', () => setManualPattern('blink'));
 
   // ---------- Instalar como app (PWA) ----------
   const INSTALL_DISMISS_KEY = 'fanaction_install_dismissed';
