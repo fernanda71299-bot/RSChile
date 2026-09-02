@@ -13,6 +13,11 @@ tiempo real a un sector específico o a todo el estadio.
   incluso si la conexión a internet falla, porque no necesita hablar con el servidor.
 - **Panel del director** (`/director.html`): protegido con PIN, muestra cuántos fans están
   conectados por sector y tiene un botón de flash por sector + un botón de "Flash a todos".
+- **Secuencia de la Bandera de Chile 🇨🇱**: un panel especial en el director para armar la
+  bandera en vivo, sector por sector, durante los versos de la canción (ver sección 6 más
+  abajo).
+- **Instrucciones por sector**: cada sector puede tener un texto que ve el fan en su pantalla
+  ("Eres parte del azul de la bandera...") para que sepa qué rol cumple durante el show.
 - **Modal de bienvenida** la primera vez que alguien entra, y un pie de página con crédito —
   todo editable sin tocar código.
 - **Instalable como app** (PWA): se puede agregar a la pantalla de inicio del celular.
@@ -30,15 +35,23 @@ Edita `config/sectors.json`:
   "welcomeMessage": "Texto que ve el fan la primera vez que abre la app...",
   "credit": "Hecho con 💛 por fans de Romeo Santos",
   "sectors": [
-    { "id": "platea-a", "name": "Platea Baja A", "color": "#FFD700" },
-    { "id": "cancha", "name": "Cancha General", "color": "#FFFFFF" }
+    {
+      "id": "cancha-vip-a",
+      "name": "Cancha VIP A",
+      "color": "#0039A6",
+      "instructions": "Eres parte del AZUL de la bandera de Chile..."
+    },
+    { "id": "cancha-general-b", "name": "Cancha General B", "color": "#FFFFFF" }
   ]
 }
 ```
 
-- `id`: identificador interno (sin espacios, minúsculas).
+- `id`: identificador interno (sin espacios, minúsculas). Si cambias un `id` que ya está
+  usado en `sequence` más abajo, tienes que actualizarlo también ahí.
 - `name`: lo que ve el fan en la lista.
 - `color`: color hexadecimal que se usará como flash de ese sector.
+- `instructions` (opcional): texto que ve el fan en su pantalla "lista" bajo su sector,
+  explicando qué rol cumple (por ejemplo, en la bandera). Si lo omites, no se muestra nada.
 - `directorPin`: cámbialo antes del evento para que nadie más controle el panel.
 - `welcomeTitle` / `welcomeMessage`: el modal que aparece la primera vez que alguien abre la
   app (solo una vez por celular).
@@ -117,6 +130,29 @@ vez, instalarla solo hace más rápido el acceso durante el show.
      acepten el permiso de cámara (funciona en la mayoría de Android con Chrome; en iPhone
      generalmente **no** está disponible por restricciones de Apple — la pantalla a color
      sigue funcionando igual en todos los teléfonos).
+
+## 6. Secuencia de la Bandera de Chile 🇨🇱
+
+Ya está configurada en `config/sectors.json`, bajo la clave `"sequence"`, con los sectores
+reales del recinto (Punto Ticket): Cancha VIP A (azul), Cancha VIP B (blanco), Cancha
+General A (rojo), y Cancha General B/C/D, Cordillera, Océano y Rapa Nui como flashes
+blancos que se van sumando de a poco.
+
+**Cómo se usa en vivo:**
+1. En el panel del director, baja hasta "Secuencia: Bandera de Chile".
+2. Verás 5 puntitos (una etapa por verso) y el botón **"Siguiente etapa"**: tócalo en el
+   momento exacto de cada verso de la canción para ir sumando sectores — el sector
+   correspondiente se enciende y **se queda prendido** (no es un flash temporizado) hasta la
+   próxima etapa.
+3. La última etapa ("¡Coro!") enciende Cancha General A, VIP A y VIP B — ahí se completa la
+   bandera.
+4. Si prefieres que avance solo, usa **"Reproducir automático"** con los segundos que quieras
+   entre etapa y etapa (útil para ensayar el timing antes del show).
+5. **"Reiniciar secuencia"** apaga todos los sectores que participan y vuelve al punto de
+   partida — úsalo antes de repetir el momento en un ensayo, o si te equivocaste de etapa.
+
+Puedes editar las etapas, colores, patrones (sólido/parpadeo) y textos en el bloque
+`"sequence"` de `config/sectors.json` si quieres ajustar la coreografía.
 
 ## Notas técnicas
 

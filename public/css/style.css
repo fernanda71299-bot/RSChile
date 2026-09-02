@@ -145,6 +145,16 @@ h1 {
   max-width: 320px;
 }
 
+.sector-instructions {
+  color: #FFD700;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.4;
+  max-width: 320px;
+  margin: 2px 0 0;
+}
+.sector-instructions.hidden { display: none; }
+
 .tips {
   margin-top: 26px;
   color: #a89c8c;

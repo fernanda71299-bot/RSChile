@@ -19,8 +19,20 @@
   const sectorGrid = document.getElementById('sector-grid');
   const logList = document.getElementById('log-list');
 
+  const sequencePanel = document.getElementById('sequence-panel');
+  const sequenceStageLabel = document.getElementById('sequence-stage-label');
+  const sequenceProgress = document.getElementById('sequence-progress');
+  const sequenceDelayInput = document.getElementById('sequence-delay');
+  const sequencePlayBtn = document.getElementById('sequence-play-btn');
+  const sequenceNextBtn = document.getElementById('sequence-next-btn');
+  const sequenceResetBtn = document.getElementById('sequence-reset-btn');
+
   let sectors = [];
   let counts = {};
+  let sequenceStages = [];
+  let currentStage = -1;
+  let sequencePlaying = false;
+  let sequenceTimer = null;
 
   const socket = io({ reconnection: true });
 
@@ -109,11 +121,91 @@
         loginScreen.classList.add('hidden');
         panelScreen.classList.remove('hidden');
         renderSectors();
+        sequenceStages = (res.sequence && res.sequence.stages) || [];
+        currentStage = -1;
+        renderSequencePanel();
       } else {
         loginError.textContent = (res && res.error) || 'Error al autenticar';
       }
     });
   }
+
+  // ---------- Secuencia: Bandera de Chile ----------
+  function renderSequencePanel() {
+    if (!sequenceStages.length) {
+      sequencePanel.classList.add('hidden');
+      return;
+    }
+    sequencePanel.classList.remove('hidden');
+    sequenceProgress.innerHTML = '';
+    sequenceStages.forEach((st, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'seq-dot' + (i <= currentStage ? ' lit' : '');
+      sequenceProgress.appendChild(dot);
+    });
+    sequenceStageLabel.textContent =
+      currentStage === -1 ? 'Lista para comenzar.' : sequenceStages[currentStage].label;
+  }
+
+  function stopAutoplay() {
+    clearTimeout(sequenceTimer);
+    sequencePlaying = false;
+    sequencePlayBtn.textContent = '▶ Reproducir automático';
+  }
+
+  function goToStage(index) {
+    if (index < 0 || index >= sequenceStages.length) return;
+    socket.emit('sequence-stage', { stageIndex: index }, (res) => {
+      if (res && res.ok) {
+        currentStage = index;
+        renderSequencePanel();
+      }
+    });
+  }
+
+  function nextStage() {
+    const next = currentStage + 1;
+    if (next >= sequenceStages.length) {
+      stopAutoplay();
+      return;
+    }
+    goToStage(next);
+  }
+
+  sequencePlayBtn.addEventListener('click', () => {
+    if (sequencePlaying) {
+      stopAutoplay();
+      return;
+    }
+    if (currentStage >= sequenceStages.length - 1) return;
+    sequencePlaying = true;
+    sequencePlayBtn.textContent = '⏸ Detener automático';
+    const step = () => {
+      nextStage();
+      if (currentStage >= sequenceStages.length - 1) {
+        stopAutoplay();
+        return;
+      }
+      const delaySeconds = Math.max(1, Math.min(60, Number(sequenceDelayInput.value) || 4));
+      sequenceTimer = setTimeout(step, delaySeconds * 1000);
+    };
+    step();
+  });
+
+  sequenceNextBtn.addEventListener('click', () => {
+    stopAutoplay();
+    nextStage();
+  });
+
+  sequenceResetBtn.addEventListener('click', () => {
+    stopAutoplay();
+    socket.emit('sequence-reset', {}, (res) => {
+      if (res && res.ok) {
+        currentStage = -1;
+        renderSequencePanel();
+      }
+    });
+  });
 
   loginBtn.addEventListener('click', doLogin);
   pinInput.addEventListener('keydown', (e) => {
@@ -129,4 +221,17 @@
   });
 
   socket.on('flash-log', (entry) => addLogRow(entry));
+
+  socket.on('sequence-log', (entry) => {
+    const row = document.createElement('div');
+    row.className = 'log-row';
+    const time = new Date(entry.ts).toLocaleTimeString();
+    const label = entry.stageIndex === -1 ? 'Secuencia reiniciada' : entry.label;
+    row.innerHTML =
+      '<span class="log-chip" style="background:#FFD700"></span><span>' + time + ' · 🇨🇱 ' + label + '</span>';
+    logList.appendChild(row);
+    while (logList.children.length > 30) {
+      logList.removeChild(logList.firstChild);
+    }
+  });
 })();

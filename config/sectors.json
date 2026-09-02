@@ -2,15 +2,133 @@
   "eventName": "Romeo Santos - Fan Action",
   "directorPin": "3535",
   "welcomeTitle": "¡Prepara tu flash!",
-  "welcomeMessage": "App gratuita hecha por el Fans Club Oficial de Romeo Santos Chile, para fans: elige tu sector y cuando llegue el momento, enciende tu flash segun las indicaciones ¡Que se encienda el estadio entero!",
-  "credit": "Hecho con 💛 por el Fans Club Oficial RSCHILE",
+  "welcomeMessage": "App gratuita hecha por fans, para fans: elige tu sector y cuando llegue el momento, tu pantalla se va a encender junto con la de todo tu sector. También puedes apretar el botón cuando quieras para prender tu flash por tu cuenta. ¡Que se encienda el estadio entero!",
+  "credit": "Hecho con 💛 por fans de Romeo Santos",
   "sectors": [
-    { "id": "canchavip-a", "name": "CANCHA VIP A", "color": "#FFD700" },
-    { "id": "canchavip-b", "name": "CANCHA VIP B", "color": "#FF3B30" },
-    { "id": "CANCHAGENERAL", "name": "CANCHA GENERAL A", "color": "#1E90FF" },
-    { "id": "canchageneral", "name": "CANCHA GENERAL B,C,D", "color": "#FFFFFF" },
-    { "id": "CORDILLERA", "name": "CORDILLERA", "color": "#B300FF" },
-    { "id": "OCEANOYSILLADERUEDAS", "name": "OCEANO Y SILLA DE RUEDAS", "color": "#00E676" },
-    { "id": "RAPA NUI", "name": "RAPA NUI", "color": "#FF8C00" }
-  ]
+    {
+      "id": "cancha-vip-a",
+      "name": "Cancha VIP A",
+      "color": "#0039A6",
+      "instructions": "Eres parte del AZUL de la bandera de Chile 🇨🇱 En el coro final tu sector se enciende junto al blanco y al rojo para formar la bandera completa. ¡Ten tu flash listo!"
+    },
+    {
+      "id": "cancha-vip-b",
+      "name": "Cancha VIP B",
+      "color": "#FFFFFF",
+      "instructions": "Eres parte del BLANCO de la bandera de Chile 🇨🇱 En el coro final tu sector se enciende junto al azul y al rojo para formar la bandera completa. ¡Ten tu flash listo!"
+    },
+    {
+      "id": "cancha-general-a",
+      "name": "Cancha General A",
+      "color": "#D52B1E",
+      "instructions": "Eres parte del ROJO de la bandera de Chile 🇨🇱 Tu sector se enciende justo antes del coro, como antesala a que se complete la bandera. ¡Ten tu flash listo!"
+    },
+    {
+      "id": "cancha-general-b",
+      "name": "Cancha General B",
+      "color": "#FFFFFF",
+      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción."
+    },
+    {
+      "id": "cancha-general-c",
+      "name": "Cancha General C",
+      "color": "#FFFFFF",
+      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción."
+    },
+    {
+      "id": "cancha-general-d",
+      "name": "Cancha General D",
+      "color": "#FFFFFF",
+      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción."
+    },
+    {
+      "id": "rapa-nui",
+      "name": "Rapa Nui",
+      "color": "#FFFFFF",
+      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Océano, con flash parpadeante."
+    },
+    {
+      "id": "oceano",
+      "name": "Océano",
+      "color": "#FFFFFF",
+      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Rapa Nui, con flash parpadeante."
+    },
+    {
+      "id": "cordillera",
+      "name": "Cordillera",
+      "color": "#FFFFFF",
+      "instructions": "Te sumas en la segunda etapa de la coreografía, con flash parpadeante."
+    },
+    {
+      "id": "silla-ruedas",
+      "name": "Silla de Ruedas",
+      "color": "#FFD700",
+      "instructions": "Usa el botón grande cuando quieras prender tu flash y acompañar el show a tu ritmo."
+    },
+    {
+      "id": "acomp-silla-ruedas",
+      "name": "Acompañante Silla de Ruedas",
+      "color": "#FFD700",
+      "instructions": "Usa el botón grande cuando quieras prender tu flash y acompañar el show a tu ritmo."
+    }
+  ],
+  "sequence": {
+    "label": "Bandera de Chile",
+    "stages": [
+      {
+        "label": "Etapa 1 de 5: se prende Cancha General B, C y D",
+        "sectors": [
+          { "id": "cancha-general-b", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-c", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-d", "color": "#FFFFFF", "pattern": "blink" }
+        ]
+      },
+      {
+        "label": "Etapa 2 de 5: se suma Cordillera",
+        "sectors": [
+          { "id": "cancha-general-b", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-c", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-d", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" }
+        ]
+      },
+      {
+        "label": "Etapa 3 de 5: se suman Océano y Rapa Nui",
+        "sectors": [
+          { "id": "cancha-general-b", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-c", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-d", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "oceano", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" }
+        ]
+      },
+      {
+        "label": "Etapa 4 de 5: se suma Cancha General A (rojo)",
+        "sectors": [
+          { "id": "cancha-general-b", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-c", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-d", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "oceano", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-a", "color": "#D52B1E", "pattern": "solid" }
+        ]
+      },
+      {
+        "label": "Etapa 5 de 5 — ¡Coro! Bandera completa",
+        "sectors": [
+          { "id": "cancha-general-b", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-c", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-d", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "oceano", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "cancha-general-a", "color": "#D52B1E", "pattern": "solid" },
+          { "id": "cancha-vip-a", "color": "#0039A6", "pattern": "solid" },
+          { "id": "cancha-vip-b", "color": "#FFFFFF", "pattern": "solid" }
+        ]
+      }
+    ]
+  }
 }

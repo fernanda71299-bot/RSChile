@@ -118,6 +118,69 @@
   margin: 22px 0 10px;
 }
 
+.sequence-panel {
+  background: #120d08;
+  border: 1px solid #2a2118;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+.sequence-panel.hidden { display: none; }
+
+.sequence-stage-label {
+  color: #f5f0e6;
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+.sequence-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.seq-dot {
+  width: 22px;
+  height: 8px;
+  border-radius: 4px;
+  background: #2a2118;
+  flex: 1;
+}
+.seq-dot.lit {
+  background: linear-gradient(90deg, #FFD700, #FF8C00);
+}
+
+.sequence-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.sequence-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #b8ada0;
+}
+
+.sequence-controls input[type="number"] {
+  width: 64px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #2e2620;
+  background: #1a140c;
+  color: #f5f0e6;
+}
+
+.seq-btn {
+  padding: 12px 16px;
+  font-size: 13px;
+  width: auto;
+}
+
 .sector-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));

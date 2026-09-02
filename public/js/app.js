@@ -6,6 +6,7 @@
   const sectorListEl = document.getElementById('sector-list');
   const mySwatch = document.getElementById('my-swatch');
   const mySectorName = document.getElementById('my-sector-name');
+  const sectorInstructionsEl = document.getElementById('sector-instructions');
   const statusText = document.getElementById('status-text');
   const flashOverlay = document.getElementById('flash-overlay');
   const changeSectorBtn = document.getElementById('change-sector-btn');
@@ -58,6 +59,15 @@
     mySwatch.style.background = mySector.color;
     mySwatch.style.boxShadow = '0 0 40px ' + mySector.color + '55';
     mySectorName.textContent = mySector.name;
+    if (sectorInstructionsEl) {
+      if (mySector.instructions) {
+        sectorInstructionsEl.textContent = mySector.instructions;
+        sectorInstructionsEl.classList.remove('hidden');
+      } else {
+        sectorInstructionsEl.textContent = '';
+        sectorInstructionsEl.classList.add('hidden');
+      }
+    }
   }
 
   function showSelectScreen() {
@@ -93,8 +103,10 @@
 
   function resetManualFlash() {
     manualOn = false;
+    holdState = null;
     clearInterval(blinkTimer);
     clearInterval(manualBlinkTimer);
+    clearInterval(holdBlinkTimer);
     flashOverlay.style.backgroundColor = 'transparent';
     setTorch(false);
     manualFlashBtn.classList.remove('active');
@@ -163,8 +175,36 @@
   let manualPattern = 'solid'; // 'solid' | 'blink'
   let manualBlinkTimer = null;
 
+  // Estado fijado en vivo por el director (ej. las etapas de la secuencia de
+  // la bandera). Tiene prioridad sobre el flash manual: mientras el director
+  // mantenga un sector "prendido" en una etapa, eso es lo que se muestra;
+  // recién cuando el director lo apaga (o cambia de sector) se vuelve al
+  // estado manual del fan.
+  let holdState = null; // {color, pattern}
+  let holdBlinkTimer = null;
+
+  function applyHold() {
+    clearInterval(holdBlinkTimer);
+    const { color, pattern } = holdState;
+    if (pattern === 'blink') {
+      let on = false;
+      holdBlinkTimer = setInterval(() => {
+        on = !on;
+        flashOverlay.style.backgroundColor = on ? color : 'transparent';
+        setTorch(on);
+      }, 180);
+    } else {
+      flashOverlay.style.backgroundColor = color;
+      setTorch(true);
+    }
+  }
+
   function applyBaseState() {
     clearInterval(manualBlinkTimer);
+    if (holdState) {
+      applyHold();
+      return;
+    }
     if (!manualOn || !mySector) {
       flashOverlay.style.backgroundColor = 'transparent';
       setTorch(false);
@@ -229,6 +269,23 @@
     if (payload.sectorId === 'ALL' || payload.sectorId === mySector.id) {
       doFlash(payload);
     }
+  });
+
+  // Etapas de secuencia (ej. armado de la bandera): el director "sostiene"
+  // un color/patrón en el sector hasta la próxima etapa o el reinicio.
+  socket.on('flash-hold', (payload) => {
+    if (!mySector || payload.sectorId !== mySector.id) return;
+    clearInterval(blinkTimer);
+    if (navigator.vibrate) navigator.vibrate(60);
+    holdState = { color: payload.color, pattern: payload.pattern || 'solid' };
+    applyHold();
+  });
+
+  socket.on('flash-off', (payload) => {
+    if (!mySector || payload.sectorId !== mySector.id) return;
+    clearInterval(holdBlinkTimer);
+    holdState = null;
+    applyBaseState();
   });
 
   // ---------- Modal de bienvenida ----------

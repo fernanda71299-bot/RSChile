@@ -29,7 +29,12 @@ app.get('/api/sectors', (req, res) => {
     welcomeTitle: config.welcomeTitle || '',
     welcomeMessage: config.welcomeMessage || '',
     credit: config.credit || '',
-    sectors: config.sectors.map((s) => ({ id: s.id, name: s.name, color: s.color }))
+    sectors: config.sectors.map((s) => ({
+      id: s.id,
+      name: s.name,
+      color: s.color,
+      instructions: s.instructions || ''
+    }))
   });
 });
 
@@ -85,7 +90,8 @@ io.on('connection', (socket) => {
         ack({
           ok: true,
           eventName: config.eventName,
-          sectors: config.sectors
+          sectors: config.sectors,
+          sequence: config.sequence || null
         });
       }
       socket.emit('sector-counts', sectorCounts);
@@ -128,6 +134,53 @@ io.on('connection', (socket) => {
       ts: eventPayload.ts
     });
 
+    if (typeof ack === 'function') ack({ ok: true });
+  });
+
+  // Etapa de la secuencia (ej. armado de la bandera): enciende de forma
+  // sostenida todos los sectores que participan de esa etapa, con el
+  // color/patrón definido en la configuración. Queda prendido hasta la
+  // próxima etapa o el reinicio (no es un flash temporizado).
+  socket.on('sequence-stage', (payload, ack) => {
+    if (socket.data.role !== 'director') {
+      if (typeof ack === 'function') ack({ ok: false, error: 'No autorizado' });
+      return;
+    }
+    const stages = (config.sequence && config.sequence.stages) || [];
+    const stageIndex = Number(payload && payload.stageIndex);
+    const stage = stages[stageIndex];
+    if (!stage) {
+      if (typeof ack === 'function') ack({ ok: false, error: 'Etapa invalida' });
+      return;
+    }
+    stage.sectors.forEach((s) => {
+      io.to(s.id).emit('flash-hold', {
+        sectorId: s.id,
+        color: s.color,
+        pattern: s.pattern || 'solid',
+        ts: Date.now()
+      });
+    });
+    io.to('directors').emit('sequence-log', {
+      stageIndex,
+      label: stage.label,
+      ts: Date.now()
+    });
+    if (typeof ack === 'function') ack({ ok: true });
+  });
+
+  // Apaga todos los sectores que participan de la secuencia, para volver a
+  // empezar desde cero.
+  socket.on('sequence-reset', (payload, ack) => {
+    if (socket.data.role !== 'director') {
+      if (typeof ack === 'function') ack({ ok: false, error: 'No autorizado' });
+      return;
+    }
+    const stages = (config.sequence && config.sequence.stages) || [];
+    const allIds = new Set();
+    stages.forEach((st) => st.sectors.forEach((s) => allIds.add(s.id)));
+    allIds.forEach((id) => io.to(id).emit('flash-off', { sectorId: id, ts: Date.now() }));
+    io.to('directors').emit('sequence-log', { stageIndex: -1, label: 'Reinicio', ts: Date.now() });
     if (typeof ack === 'function') ack({ ok: true });
   });
 

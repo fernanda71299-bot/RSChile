@@ -55,6 +55,20 @@
 
     <button id="flash-all-btn" class="flash-all-btn">⚡ FLASH A TODOS (color elegido)</button>
 
+    <h2 class="section-title">Secuencia: Bandera de Chile 🇨🇱</h2>
+    <div id="sequence-panel" class="sequence-panel hidden">
+      <p class="sequence-stage-label" id="sequence-stage-label">Lista para comenzar.</p>
+      <div class="sequence-progress" id="sequence-progress"></div>
+      <div class="sequence-controls">
+        <label>Segundos entre etapas
+          <input type="number" id="sequence-delay" min="1" max="60" step="1" value="4" />
+        </label>
+        <button id="sequence-play-btn" class="primary-btn seq-btn">▶ Reproducir automático</button>
+        <button id="sequence-next-btn" class="primary-btn seq-btn">Siguiente etapa ⏭</button>
+        <button id="sequence-reset-btn" class="link-btn">Reiniciar secuencia</button>
+      </div>
+    </div>
+
     <h2 class="section-title">Sectores</h2>
     <div id="sector-grid" class="sector-grid"></div>
 

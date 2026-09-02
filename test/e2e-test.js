@@ -4,7 +4,7 @@ const { io } = require('socket.io-client');
 
 const URL = 'http://localhost:3000';
 const PIN = '3535';
-const SECTOR = 'platea-a';
+const SECTOR = 'cancha-general-b';
 
 let passed = 0;
 let failed = 0;
@@ -59,7 +59,7 @@ async function main() {
   // Fan de otro sector NO debe recibir el flash
   const otherFan = io(URL, { transports: ['websocket'] });
   await new Promise((res) => otherFan.on('connect', res));
-  await new Promise((res) => otherFan.emit('join-sector', { sectorId: 'cancha' }, res));
+  await new Promise((res) => otherFan.emit('join-sector', { sectorId: 'cancha-general-c' }, res));
   let otherReceived = false;
   otherFan.once('flash', () => { otherReceived = true; });
 
@@ -73,6 +73,29 @@ async function main() {
   await new Promise((res) => director.emit('trigger-flash', { sectorId: 'ALL', color: '#FFFFFF', pattern: 'blink', duration: 500 }, res));
   const [p1, p2] = await Promise.all([allReceivedFan, allReceivedOther]);
   check('flash ALL llega a fans de distintos sectores', p1.color === '#FFFFFF' && p2.color === '#FFFFFF');
+
+  // ---------- Secuencia de la bandera ----------
+  // Un fan sin autenticar (no director) no puede avanzar la secuencia
+  const unauthorizedSeq = await new Promise((res) => fan.emit('sequence-stage', { stageIndex: 0 }, res));
+  check('un fan (no director) no puede disparar una etapa de secuencia', unauthorizedSeq && unauthorizedSeq.ok === false);
+
+  // Etapa 1 sostiene un flash blanco parpadeante en cancha-general-b (el SECTOR del fan)
+  const stage1Received = new Promise((res) => fan.once('flash-hold', res));
+  const stage1Ack = await new Promise((res) => director.emit('sequence-stage', { stageIndex: 0 }, res));
+  check('director dispara la etapa 1 de la secuencia', stage1Ack && stage1Ack.ok === true);
+  const stage1Payload = await stage1Received;
+  check('el fan recibe flash-hold con el color/patrón de la etapa', stage1Payload.color === '#FFFFFF' && stage1Payload.pattern === 'blink');
+
+  // Etapa invalida es rechazada
+  const badStage = await new Promise((res) => director.emit('sequence-stage', { stageIndex: 999 }, res));
+  check('una etapa de secuencia invalida es rechazada', badStage && badStage.ok === false);
+
+  // El reinicio apaga el sector (flash-off)
+  const resetReceived = new Promise((res) => fan.once('flash-off', res));
+  const resetAck = await new Promise((res) => director.emit('sequence-reset', {}, res));
+  check('director reinicia la secuencia', resetAck && resetAck.ok === true);
+  const resetPayload = await resetReceived;
+  check('el fan recibe flash-off al reiniciar la secuencia', resetPayload.sectorId === SECTOR);
 
   fan.close();
   director.close();
