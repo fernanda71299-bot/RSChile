@@ -32,8 +32,8 @@ Edita `config/sectors.json`:
   "eventName": "Romeo Santos - Fan Action",
   "directorPin": "3535",
   "welcomeTitle": "¡Prepara tu flash!",
-  "welcomeMessage": "Texto que ve el fan la primera vez que abre la app...",
-  "credit": "Hecho con 💛 por fans de Romeo Santos",
+  "welcomeMessage": "App hecha por Fans Club Oficial Romeo Santos Chile, para fans: elige tu sector y cuando llegue el momento, enciende tu flash según las indicaciones. ¡Que se encienda el estadio entero!  ",
+  "credit": "Hecho con 💛 por el Fans Club Oficial Romeo Santos Chile     @rschile_fansclub",
   "sectors": [
     {
       "id": "cancha-vip-a",
