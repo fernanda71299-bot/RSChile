@@ -296,9 +296,19 @@
     welcomeModal.classList.remove('hidden');
   }
 
+  const songModal = document.getElementById('song-modal');
+  const songOkBtn = document.getElementById('song-ok');
+
   welcomeOkBtn.addEventListener('click', () => {
     welcomeModal.classList.add('hidden');
-  });
+    if (songModal) songModal.classList.remove('hidden');
+});
+
+if (songOkBtn) {
+    songOkBtn.addEventListener('click', () => {
+      songModal.classList.add('hidden');
+    });
+}
 
   // ---------- Boton grande de flash manual ----------
   // Funciona como interruptor: un toque lo prende y se queda prendido hasta
