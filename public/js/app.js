@@ -61,7 +61,7 @@
     mySectorName.textContent = mySector.name;
     if (sectorInstructionsEl) {
       if (mySector.instructions) {
-        sectorInstructionsEl.textContent = mySector.instructions;
+        sectorInstructionsEl.innerHTML = mySector.instructions;
         sectorInstructionsEl.classList.remove('hidden');
       } else {
         sectorInstructionsEl.textContent = '';
