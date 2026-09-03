@@ -153,6 +153,11 @@ h1 {
   max-width: 320px;
   margin: 2px 0 0;
 }
+.sector-instructions .lyric {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 700;
+}
 .sector-instructions.hidden { display: none; }
 
 .tips {
