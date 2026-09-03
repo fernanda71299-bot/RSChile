@@ -63,8 +63,8 @@
       "id": "silla-ruedas",
       "name": "Silla de Ruedas",
       "color": "#FFFFFF",
-      "instructions": "Te sumas en la segunda etapa de la coreografía, con flash parpadeante en el verso de la canción: <span class='lyric'>La señal que continua mi mala racha, tus llamadas perdidas...</span>"
-    },
+      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Rapa Nui y Océano, con flash parpadeante en el verso de la canción: <span class='lyric'>Quisiera creer que yo te puedo ignorar, que no importas tanto, mi dignidad es un tablero en la pared donde tu tiras dardos...</span>"
+    }
   ],
   "sequence": {
     "label": "Bandera de Chile",
@@ -87,14 +87,14 @@
         ]
       },
       {
-        "label": "Etapa 3 de 5: se suman Océano y Rapa Nui y Silla de Ruedas",
+        "label": "Etapa 3 de 5: se suman Océano, Rapa Nui y Silla de Ruedas",
         "sectors": [
           { "id": "cancha-general-b", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "cancha-general-c", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "cancha-general-d", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "oceano", "color": "#FFFFFF", "pattern": "blink" },
-          { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" }
+          { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "silla-ruedas", "color": "#FFFFFF", "pattern": "blink" }
         ]
       },
@@ -107,6 +107,7 @@
           { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "oceano", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "silla-ruedas", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "cancha-general-a", "color": "#D52B1E", "pattern": "solid" }
         ]
       },
@@ -119,6 +120,7 @@
           { "id": "cordillera", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "oceano", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "rapa-nui", "color": "#FFFFFF", "pattern": "blink" },
+          { "id": "silla-ruedas", "color": "#FFFFFF", "pattern": "blink" },
           { "id": "cancha-general-a", "color": "#D52B1E", "pattern": "solid" },
           { "id": "cancha-vip-a", "color": "#0039A6", "pattern": "solid" },
           { "id": "cancha-vip-b", "color": "#FFFFFF", "pattern": "solid" }
