@@ -9,61 +9,61 @@
       "id": "cancha-vip-a",
       "name": "Cancha VIP A",
       "color": "#0039A6",
-      "instructions": "Eres parte del AZUL de la bandera de Chile 🇨🇱 En el coro final tu sector se enciende junto al blanco y al rojo para formar la bandera completa, en el verso: "Puede que sea por venus que no puedo apagar las llamas y así me quemo en tu fuego...""
+      "instructions": "Eres parte del AZUL de la bandera de Chile 🇨🇱 En el coro final tu sector se enciende junto al blanco y al rojo para formar la bandera completa, en el verso: <span class='lyric'>Puede que sea por venus que no puedo apagar las llamas y así me quemo en tu fuego...</span>"
     },
     {
       "id": "cancha-vip-b",
       "name": "Cancha VIP B",
       "color": "#FFFFFF",
-      "instructions": "Eres parte del BLANCO de la bandera de Chile 🇨🇱 En el coro final tu sector se enciende junto al azul y al rojo para formar la bandera completa, en el verso: "Puede que sea por venus que no puedo apagar las llamas y así me quemo en tu fuego""
+      "instructions": "Eres parte del BLANCO de la bandera de Chile 🇨🇱 En el coro final tu sector se enciende junto al azul y al rojo para formar la bandera completa, en el verso: <span class='lyric'>Puede que sea por venus que no puedo apagar las llamas y así me quemo en tu fuego</span>"
     },
     {
       "id": "cancha-general-a",
       "name": "Cancha General A",
       "color": "#D52B1E",
-      "instructions": "Eres parte del ROJO de la bandera de Chile 🇨🇱 Tu sector se enciende justo antes del coro, en el verso: "Para ser mas sincero y certero mi signo de cáncer es muy vulnerable para un Leo ""
+      "instructions": "Eres parte del ROJO de la bandera de Chile 🇨🇱 Tu sector se enciende justo antes del coro, en el verso: <span class='lyric'>Para ser mas sincero y certero mi signo de cáncer es muy vulnerable para un Leo...</span> "
     },
     {
       "id": "cancha-general-b",
       "name": "Cancha General B",
       "color": "#FFFFFF",
-      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción: "Por poquito me olvido de verdad ya habia dejado la bebida...""
+      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción: <span class='lyric'>Por poquito me olvido de verdad ya habia dejado la bebida...</span>"
     },
     {
       "id": "cancha-general-c",
       "name": "Cancha General C",
       "color": "#FFFFFF",
-      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción: "Por poquito me olvido de verdad ya habia dejado la bebida...""
+      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción: <span class='lyric'>Por poquito me olvido de verdad ya habia dejado la bebida...</span>"
     },
     {
       "id": "cancha-general-d",
       "name": "Cancha General D",
       "color": "#FFFFFF",
-      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción: "Por poquito me olvido de verdad ya habia dejado la bebida...""
+      "instructions": "Tu sector abre la coreografía: es de los primeros en encenderse, ya en el primer verso de la canción: <span class='lyric'>Por poquito me olvido de verdad ya habia dejado la bebida...</span>"
     },
     {
       "id": "rapa-nui",
       "name": "Rapa Nui",
       "color": "#FFFFFF",
-      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Océano, con flash parpadeante en el verso de la cancion: "Quisiera creer que yo te puedo ignorar, que no importas tanto, mi dignidad es un tablero en la pared donde tu tiras dardos""
+      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Océano, con flash parpadeante en el verso de la cancion: <span class='lyric'>Quisiera creer que yo te puedo ignorar, que no importas tanto, mi dignidad es un tablero en la pared donde tu tiras dardos...</span>"
     },
     {
       "id": "oceano",
       "name": "Océano",
       "color": "#FFFFFF",
-      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Rapa Nui, con flash parpadeante en el verso de la canción: "Quisiera creer que yo te puedo ignorar, que no importas tanto, mi dignidad es un tablero en la pared donde tu tiras dardos""
+      "instructions": "Te sumas en la tercera etapa de la coreografía, junto con Rapa Nui, con flash parpadeante en el verso de la canción: <span class='lyric'>Quisiera creer que yo te puedo ignorar, que no importas tanto, mi dignidad es un tablero en la pared donde tu tiras dardos...</span>"
     },
     {
       "id": "cordillera",
       "name": "Cordillera",
       "color": "#FFFFFF",
-      "instructions": "Te sumas en la segunda etapa de la coreografía, con flash parpadeante en el verso de la canción: "La señal que continua mi mala racha, tus llamadas perdidas...""
+      "instructions": "Te sumas en la segunda etapa de la coreografía, con flash parpadeante en el verso de la canción: <span class='lyric'>La señal que continua mi mala racha, tus llamadas perdidas...</span>"
     },
     {
       "id": "silla-ruedas",
       "name": "Silla de Ruedas",
       "color": "#FFFFFF",
-      "instructions": "Te sumas en la segunda etapa de la coreografía, con flash parpadeante en el verso de la canción: "La señal que continua mi mala racha, tus llamadas perdidas...""
+      "instructions": "Te sumas en la segunda etapa de la coreografía, con flash parpadeante en el verso de la canción: <span class='lyric'>La señal que continua mi mala racha, tus llamadas perdidas...</span>"
     },
   ],
   "sequence": {
