@@ -85,10 +85,10 @@
     joinSector(id);
   }
 
-  function joinSector(id) {
+    function joinSector(id) {
     socket.emit('join-sector', { sectorId: id }, (res) => {
       if (res && res.ok) {
-        statusText.textContent = 'Conectado. Esperando la señal del animador...';
+        statusText.textContent = '';
       } else {
         statusText.textContent = 'No se pudo unir al sector. Intenta de nuevo.';
       }
